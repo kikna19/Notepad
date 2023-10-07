@@ -3,7 +3,7 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {from, Observable} from "rxjs";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+import {GoogleAuthProvider} from 'firebase/auth'
 
 
 
@@ -35,6 +35,6 @@ export class AuthService {
         this.afs.signOut();
     }
   google(){
-      this.afs.signInWithPopup(googleAuthProvider)
+      this.afs.signInWithPopup(new GoogleAuthProvider());
   }
 }

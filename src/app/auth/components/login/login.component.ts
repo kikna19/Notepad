@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private router: Router,
     private store: Store<AppState>,
-    private afs: AngularFireAuth
+    private afs: AngularFireAuth,
+    public authService:AuthService
   ) {
   }
 
