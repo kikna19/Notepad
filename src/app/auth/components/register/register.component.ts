@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {fromEvent, Observable} from "rxjs";
 import {catchError, exhaustMap, filter, map, switchMap, tap} from "rxjs/operators";
@@ -8,62 +8,67 @@ import {FormValidator} from "../../validators/form-validator";
 
 
 @Component({
-  selector: 'register',
-  templateUrl: 'register.component.html',
-  styleUrls:['register.component.scss']
+    selector: 'register',
+    templateUrl: 'register.component.html',
+    styleUrls: ['register.component.scss']
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
 
-  form: FormGroup;
-  email!: string;
-  password!: string;
-  err: any;
-  @ViewChild('registerBtn', {static: true, read: ElementRef}) registerBtn!: ElementRef;
+    @ViewChild('registerBtn', {static: true, read: ElementRef<HTMLButtonElement>}) registerBtn: ElementRef<HTMLButtonElement>;
+
+    public form: FormGroup;
+    public controls: string[] = [];
 
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private auth: AuthService,
-  ) {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, FormValidator.minLength, FormValidator.maxLength]],
-    })
-  }
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+    ) {
 
-  ngOnInit(): void {
-    this.auth.logOut();
-  }
+    }
 
-  ngAfterViewInit(): void {
-    this.register();
-  }
+    ngOnInit(): void {
+        this._createForm();
+    }
 
-  register() {
-    fromEvent(this.registerBtn.nativeElement, 'click').pipe(
-      filter(_ => this.form.valid),
-      exhaustMap(_ => this.auth.register(this.email, this.password)),
-      tap(() => this.err = this.auth.error),
-      switchMap((): Observable<any> => this.auth.user()),
-    ).subscribe(user => {
-      if (user) {
-        this.router.navigate(['/notes']);
-      }
-      this.form.reset();
-    })
-  }
+    ngAfterViewInit(): void {
+        this._register();
+    }
+
+    private _createForm(): void {
+        this.form = this.fb.group({
+            email: ['', [Validators.required]],
+            username: ['', [Validators.required]],
+            mobile: ['', [Validators.required]],
+            password: ['', [Validators.required]],
+            repeatPassword: ['', [Validators.required]],
+        });
+        this._getControls();
+    }
+
+    private _register() {
+        // fromEvent(this.registerBtn.nativeElement, 'click').pipe(
+        //   filter(_ => this.form.valid),
+        //   exhaustMap(_ => this.auth.register('asd@asd.com', 'Qwerty123')),
+        //   tap(() => this.err = this.auth.error),
+        //   switchMap((): Observable<any> => this.auth.user()),
+        // ).subscribe(user => {
+        //   if (user) {
+        //     this.router.navigate(['/notes']);
+        //   }
+        //   this.form.reset();
+        // })
+    }
 
 
-  login(): void {
-    this.router.navigate(['login'])
-  }
+    login(): void {
+        this.router.navigate(['login'])
+    }
 
-  get control() {
-    return this.form.controls;
-  }
+    private _getControls(): void {
+        for (let i in this.form.controls) {
+            this.controls.push(i);
+        }
+    }
 
-  clearError(e: any) {
-    this.err = '';
-  }
 }

@@ -13,6 +13,11 @@ import {AuthModule} from "./auth/auth.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
+import {StoreModule} from "@ngrx/store";
+import {authReducer} from "./store/auth/auth.reducers";
+import {EffectsModule} from "@ngrx/effects";
+import {AuthEffects} from "./store/auth/auth.effects";
+
 
 @NgModule({
   declarations: [
@@ -29,7 +34,9 @@ import {ReactiveFormsModule} from "@angular/forms";
     AuthModule,
     MatToolbarModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({ auth: authReducer }),
+    EffectsModule.forRoot([AuthEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

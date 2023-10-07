@@ -5,28 +5,24 @@
   flex-direction: column;
 }
 
-.register {
+.login {
   @include flex-box(center);
-  background-image: url("https://wallpaperaccess.com/full/365762.jpg");
-  background-size: cover;
-  background-position: center;
+  background: #08121B;
   width: 100%;
   height: 100%;
 
+
   &__form {
     @include flex-box(flex-start);
-    height: 70%;
     width: 25rem;
-    background: transparent;
-    -webkit-box-shadow: 0 0 1rem .5rem #000000;
-    box-shadow: 0 0 1rem .5rem #000000;
+    background: #203240;
+    padding: 2rem;
 
 
     .header {
       color: white;
       margin-top: 2rem;
       text-transform: capitalize;
-      font-family: Monaco;
       letter-spacing: .2rem;
     }
 
@@ -34,47 +30,51 @@
     .text {
       border: none;
       background-repeat: no-repeat;
-      background-size: 1.2rem;
+      background-size: 1.5rem;
       background-position: .5rem;
       width: 70%;
-      height: 2.5rem;
-      padding-left: 2.5rem;
-      margin-top: 2rem;
-      font-family: Monaco;
-      font-size: .9rem;
+      height: 4rem;
+      padding: .3rem 2.5rem 0 3.5rem;
+      font-size: 1.2rem;
       outline: none;
+      background-color: transparent;
     }
 
     .text::placeholder {
       text-transform: capitalize;
-      font-style: italic;
-      font-size: .9rem;
-      font-family: Monaco;
+      color: #606A70;
     }
 
+
+    hr {
+      width: calc(100% - 40px);
+      border: 1px solid #4E565E;
+    }
 
     .email {
       background-image: url("http://cdn.onlinewebfonts.com/svg/img_91484.png");
     }
 
-    .password {
+    .password, .repeatPassword {
       background-image: url("https://icon-library.com/images/lock-png-icon/lock-png-icon-20.jpg");
     }
+
 
     #error {
       width: 80%;
     }
 
     .btn {
-      width: 80%;
-      height: 3rem;
-      margin-top: 2rem;
-      background: #27A0FF;
+      width: 100%;
+      height: 4rem;
+      margin-top: .6rem;
+      border-radius: 0;
+      background: #171E27;
       text-transform: capitalize;
-      font-family: Monaco;
+      color: white;
     }
 
-    .login {
+    .register {
       display: block;
       text-align: center;
       width: 80%;
@@ -82,7 +82,6 @@
 
       h5:nth-child(1) {
         color: white;
-        font-family: "Andale Mono";
         font-size: 1rem;
         text-transform: capitalize;
       }
@@ -90,18 +89,16 @@
       button:nth-child(2) {
         text-transform: capitalize;
         color: #27A0FF;
-        font-family: "Andale Mono";
         font-weight: bold;
         font-size: .9rem;
       }
 
     }
-
   }
 }
 
 @media (max-width: 800px) {
-  .register {
+  .login {
     &__form {
       height: 65%;
       width: 22rem;
@@ -111,7 +108,7 @@
 
 
 @media (max-width: 500px) {
-  .register {
+  .login {
     &__form {
       height: 65%;
       width: 20rem;
@@ -136,30 +133,21 @@
 }
 
 @media (max-width: 420px) {
-  .register {
+  .login {
     &__form {
       height: 65%;
       width: 18rem;
 
       .header {
+        margin-top: 1rem;
         font-size: 1rem;
       }
 
-      .text {
+      input {
         height: 2rem;
-        font-size: .7rem;
       }
 
-      .text::placeholder {
-        font-size: .7rem;
-      }
-
-      .btn {
-        height: 2.5rem;
-        font-size: .7rem;
-      }
-
-      .login {
+      .register {
         h5:nth-child(1) {
           font-size: .8rem;
         }
@@ -168,7 +156,6 @@
           font-size: .8rem;
         }
       }
-
 
     }
 

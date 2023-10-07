@@ -1,26 +1,33 @@
-<mat-toolbar-row class="login">
-  <form [formGroup]="form" class="login__form" (ngSubmit)="signIn()">
-    <h2 class="header">login</h2>
-    <input
-      class="email text"
-      placeholder="email"
-      type="email" formControlName="email">
-<!--    <mat-error *ngIf="control.email.errors?.required && control.email.dirty">Email is required</mat-error>-->
-<!--    <mat-error *ngIf="control.email.errors?.email">Enter email</mat-error>-->
-    <input
-      class="password text"
-      placeholder="password"
-      type="password"
-      formControlName="password">
+<section class="login">
+  <form [formGroup]="form" class="login__form">
+    <img src="assets/logo.png" width="80" style=" opacity: .7; top: -70px" alt="">
+    <article style="width: 100%; margin-top: 32px;  background: #848A92; display: inline-flex; justify-content: center; align-items: center; flex-direction: column">
+      <input
+        class="email text"
+        placeholder="email"
+        type="email"
+        formControlName="email">
+      <hr>
+      <!--    <mat-error *ngIf="control.email.errors?.required && control.email.dirty">Email is required</mat-error>-->
+      <!--    <mat-error *ngIf="control.email.errors?.email">Enter email</mat-error>-->
+      <input
+        class="password text"
+        placeholder="********"
+        type="password"
+        formControlName="password">
+    </article>
 <!--    <mat-error *ngIf="control.password.errors?.required && control.password.dirty">Password is required</mat-error>-->
 <!--    <mat-error *ngIf="control.password.errors?.minLength && control.password.dirty">Password min length is 6</mat-error>-->
 <!--    <mat-error *ngIf="control.password.errors?.maxLength && control.password.dirty">Password max length is 20</mat-error>-->
+    <aside style="height: 4rem; display: flex; width: 100%; justify-content: space-between; align-items: center">
+      <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+      <span>Forgot Password?</span>
+    </aside>
     <button
       [disabled]="form.invalid"
       class="btn"
       #signInBtn
-      mat-button
-      (click)="signIn()">
+      mat-button>
       login
     </button>
     <div class="register">
@@ -32,6 +39,9 @@
         (click)="register()">
         sign up
       </button>
+      <button>
+        google
+      </button>
     </div>
   </form>
-</mat-toolbar-row>
+</section>

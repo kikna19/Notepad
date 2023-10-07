@@ -1,11 +1,28 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  untracked,
+  ViewChild
+} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {fromEvent, Observable} from "rxjs";
-import {exhaustMap, filter, switchMap, tap} from "rxjs/operators";
+import {concatMap, fromEvent, Observable} from "rxjs";
+import {exhaustMap, filter, map, switchMap, tap} from "rxjs/operators";
 import {AuthService} from "../../services/auth.service";
 import {FormValidator} from "../../validators/form-validator";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../store/app/app.state";
+import {loginRequest} from "../../../store/auth/auth.actions";
+import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selectors";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import firebase from "firebase/compat";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
+@UntilDestroy()
 @Component({
   selector: 'login',
   templateUrl: 'login.component.html',
@@ -13,51 +30,53 @@ import {FormValidator} from "../../validators/form-validator";
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('signInBtn', {static: true, read: ElementRef}) signInBtn!: ElementRef;
-  email!: string;
-  password!: string;
-  form: FormGroup;
-  err: any;
+  @ViewChild('signInBtn', {static: true, read: ElementRef<HTMLButtonElement>}) signInBtn: ElementRef<HTMLButtonElement>;
+
+  public form: FormGroup;
+  public user$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthService,
+    private store: Store<AppState>,
+    private afs: AngularFireAuth
   ) {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, FormValidator.minLength, FormValidator.maxLength]],
-    });
   }
 
   ngOnInit(): void {
-    this.auth.logOut();
+    this._createForm();
+    this.user$ = this.store.select(user);
   }
 
   ngAfterViewInit(): void {
-    this.signIn();
+    this._signIn();
   }
 
-  signIn() {
+  private _createForm(): void {
+    this.form = this.fb.group({
+      email: ['a@a.com', [Validators.required, Validators.email]],
+      password: ['Qwerty123', [Validators.required, FormValidator.minLength, FormValidator.maxLength]],
+    });
+  }
+
+  private _signIn(): void {
+    const {email, password} = this.form.value;
+
     fromEvent(this.signInBtn.nativeElement, 'click').pipe(
-      filter(_ => this.form.valid),
-      exhaustMap(_ => this.auth.login(this.email, this.password)),
-      tap(() => this.err = this.auth.error),
-      switchMap((): Observable<any> => this.auth.user()),
-    ).subscribe(user => {
-      if (user) {
-        // this.guard.notesLoad = true;
-        this.router.navigate(['/notes']);
-      }
-      this.form.reset();
-    })
+      untilDestroyed(this),
+      filter(() => this.form.valid),
+      map(() => this.store.dispatch(loginRequest({email, password}))),
+    ).subscribe();
   }
 
-  register(): void {
+  public register(): void {
     this.router.navigate(['register'])
   }
 
-  get control() {
+  public get control() {
     return this.form.controls;
   }
+
+
+
 }
