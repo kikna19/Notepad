@@ -30,23 +30,13 @@ import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions, MatCheckboxModu
     FormsModule,
     AngularFireAuthModule,
     AuthRoutingModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyCHf9NYrFlnm-Qp3M_WAicue_aXhh3gUWs",
-      authDomain: "notepad-dashboard.firebaseapp.com",
-      projectId: "notepad-dashboard",
-      storageBucket: "notepad-dashboard.appspot.com",
-      messagingSenderId: "163645901941",
-      appId: "1:163645901941:web:4ef359962675f80b11bc3c",
-      measurementId: "G-CCYTNMG0KW"
-    }),
+
     RouterModule,
     MatDividerModule,
     NgOptimizedImage,
     MatCheckboxModule
   ],
   providers:[
-    AuthService,
-    {provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'noop' }}
   ]
 })
 export class AuthModule { }
