@@ -20,7 +20,6 @@ import {loginRequest} from "../../../store/auth/auth.actions";
 import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selectors";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @UntilDestroy()
 @Component({
@@ -34,6 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   public form: FormGroup;
   public user$: Observable<any>;
+  public loader$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -45,8 +45,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this._createForm();
     this.user$ = this.store.select(user);
+    this.loader$ = this.store.select(authLoading);
+
+    this._createForm();
   }
 
   ngAfterViewInit(): void {

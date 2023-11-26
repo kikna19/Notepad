@@ -1,10 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {fromEvent, Observable} from "rxjs";
-import {catchError, exhaustMap, filter, map, switchMap, tap} from "rxjs/operators";
-import {AuthService} from "../../services/auth.service";
-import {FormValidator} from "../../validators/form-validator";
 
 
 @Component({
@@ -18,7 +14,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     public form: FormGroup;
     public controls: string[] = [];
-
 
     constructor(
         private fb: FormBuilder,

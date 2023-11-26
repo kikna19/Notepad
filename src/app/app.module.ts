@@ -18,6 +18,7 @@ import {authReducer} from "./store/auth/auth.reducers";
 import {EffectsModule} from "@ngrx/effects";
 import {AuthEffects} from "./store/auth/auth.effects";
 import {AngularFireModule} from "@angular/fire/compat";
+import {LandingModule} from "./main/landing.module";
 
 
 @NgModule({
@@ -28,26 +29,27 @@ import {AngularFireModule} from "@angular/fire/compat";
     DatePipe,
     LockedItemComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AuthModule,
-    MatToolbarModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    StoreModule.forRoot({ auth: authReducer }),
-    EffectsModule.forRoot([AuthEffects]),
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyCHf9NYrFlnm-Qp3M_WAicue_aXhh3gUWs",
-      authDomain: "notepad-dashboard.firebaseapp.com",
-      projectId: "notepad-dashboard",
-      storageBucket: "notepad-dashboard.appspot.com",
-      messagingSenderId: "163645901941",
-      appId: "1:163645901941:web:4ef359962675f80b11bc3c",
-      measurementId: "G-CCYTNMG0KW"
-    }),
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AuthModule,
+        MatToolbarModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        StoreModule.forRoot({auth: authReducer}),
+        EffectsModule.forRoot([AuthEffects]),
+        AngularFireModule.initializeApp({
+            apiKey: "AIzaSyCHf9NYrFlnm-Qp3M_WAicue_aXhh3gUWs",
+            authDomain: "notepad-dashboard.firebaseapp.com",
+            projectId: "notepad-dashboard",
+            storageBucket: "notepad-dashboard.appspot.com",
+            messagingSenderId: "163645901941",
+            appId: "1:163645901941:web:4ef359962675f80b11bc3c",
+            measurementId: "G-CCYTNMG0KW"
+        }),
+        LandingModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

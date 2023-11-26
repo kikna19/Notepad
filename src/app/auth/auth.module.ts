@@ -13,6 +13,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {RouterModule} from "@angular/router";
 import {MatDividerModule} from "@angular/material/divider";
 import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions, MatCheckboxModule} from "@angular/material/checkbox";
+import {LandingModule} from "../main/landing.module";
 
 
 
@@ -21,21 +22,22 @@ import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions, MatCheckboxModu
     LoginComponent,
     RegisterComponent
   ],
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    FormsModule,
-    AngularFireAuthModule,
-    AuthRoutingModule,
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        FormsModule,
+        AngularFireAuthModule,
+        AuthRoutingModule,
 
-    RouterModule,
-    MatDividerModule,
-    NgOptimizedImage,
-    MatCheckboxModule
-  ],
+        RouterModule,
+        MatDividerModule,
+        NgOptimizedImage,
+        MatCheckboxModule,
+        LandingModule
+    ],
   providers:[
   ]
 })

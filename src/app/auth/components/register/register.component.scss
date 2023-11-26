@@ -52,11 +52,20 @@
     }
 
     .email {
-      background-image: url("http://cdn.onlinewebfonts.com/svg/img_91484.png");
+      background-position: .5rem 1.3rem;
+      background-image: url("../../../../assets/email_logo.png");
     }
 
     .password, .repeatPassword {
-      background-image: url("https://icon-library.com/images/lock-png-icon/lock-png-icon-20.jpg");
+      background-image: url("../../../../assets/lock_logo.jpg");
+    }
+
+    .username {
+      background-image: url("../../../../assets/user_logo.png");
+    }
+
+    .mobile {
+      background-image: url("../../../../assets/mobile_logo.png");
     }
 
 

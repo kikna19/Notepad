@@ -25,7 +25,7 @@
     "@ngrx/effects": "^16.2.0",
     "@ngrx/entity": "^16.2.0",
     "@ngrx/store": "^16.2.0",
-    "firebase": "^10.4.0",
+    "firebase": "^10.6.0",
     "gsap": "^3.12.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -42,6 +42,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss-import": "^15.1.0",
+    "tailwindcss": "^3.3.5",
     "typescript": "~5.1.3"
   }
 }

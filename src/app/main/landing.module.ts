@@ -10,13 +10,16 @@ import {CreateComponent} from "./components/create/create.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-
-
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
     LandingComponent,
-    CreateComponent
+    CreateComponent,
+    LoaderComponent
+  ],
+  exports: [
+    LoaderComponent
   ],
   imports: [
     CommonModule,

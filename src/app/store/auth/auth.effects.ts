@@ -7,6 +7,7 @@ import {AuthService} from "../../auth/services/auth.service";
 import {of} from "rxjs";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
@@ -27,7 +28,7 @@ export class AuthEffects {
             this.actions$.pipe(
                 ofType(AuthActions.loginSuccess),
                 tap((res: LoginSuccess) => {
-
+                  this.router.navigate(['notes'])
                 })
             ), {
             dispatch: false
@@ -37,7 +38,8 @@ export class AuthEffects {
 
     constructor(
         private actions$: Actions,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) {
     }
 }
