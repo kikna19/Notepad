@@ -1,7 +1,7 @@
 <section class="login">
   <form [formGroup]="form" class="login__form">
     <img src="assets/logo.png" width="80" style=" opacity: .7; top: -70px" alt="">
-    <article style="width: 100%; margin-top: 32px;  background: #848A92; display: inline-flex; justify-content: center; align-items: center; flex-direction: column">
+    <article style="width: 100%; margin-top: 32px;  background: #848A92; display: inline-flex; justify-content: center; align-items: center; flex-direction: column; border-radius: .5rem">
       <input
         class="email text"
         placeholder="email"
@@ -20,8 +20,8 @@
 <!--    <mat-error *ngIf="control.password.errors?.minLength && control.password.dirty">Password min length is 6</mat-error>-->
 <!--    <mat-error *ngIf="control.password.errors?.maxLength && control.password.dirty">Password max length is 20</mat-error>-->
     <aside style="height: 4rem; display: flex; width: 100%; justify-content: space-between; align-items: center">
-      <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-      <span>Forgot Password?</span>
+      <mat-checkbox class="example-margin "><span class="text-[#848A92] font-bold ">Remember</span></mat-checkbox>
+      <span class="text-[#848A92] font-bold ">Forgot Password?</span>
     </aside>
     <button
       [disabled]="form.invalid"
@@ -30,22 +30,18 @@
       mat-button>
       login
     </button>
-    <div class="register">
-      <h5>
-        don't have an account?
-      </h5>
-      <button
-        mat-button
-        (click)="register()">
-        sign up
+    <aside class="w-full flex justify-between flex-wrap flex-row mt-6 mb-4">
+      <button #googleBtn class="flex flex-row items-center justify-center text-[#171E27] gap-1.5 font-bold tracking-wide">
       </button>
-      <button (click)="authService.google()">
-        google
+      <button #facebookBtn class="flex flex-row items-center justify-center text-[#171E27] gap-1.5 font-bold tracking-wide"></button>
+      <button #githubBtn class="flex flex-row items-center justify-center text-[#171E27]  gap-1.5 font-bold tracking-wide"></button>
+    </aside>
+    <span class="mt-[.5rem] mb-2 text-white font-bold">OR</span>
+      <button class="btn" mat-button>
+        register
       </button>
-    </div>
   </form>
 </section>
-
 <ng-container *ngIf="loader$ | async">
   <app-loader></app-loader>
 </ng-container>

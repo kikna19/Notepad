@@ -20,6 +20,7 @@ import {loginRequest} from "../../../store/auth/auth.actions";
 import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selectors";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
+import {AUTH_SVGS} from "../../../main/shared/svgs/svgs";
 
 @UntilDestroy()
 @Component({
@@ -30,6 +31,12 @@ import firebase from "firebase/compat";
 export class LoginComponent implements OnInit, AfterViewInit {
 
   @ViewChild('signInBtn', {static: true, read: ElementRef<HTMLButtonElement>}) signInBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('googleBtn', {static: true, read: ElementRef<HTMLButtonElement>}) googleBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('facebookBtn', {
+    static: true,
+    read: ElementRef<HTMLButtonElement>
+  }) facebookBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild('githubBtn', {static: true, read: ElementRef<HTMLButtonElement>}) githubBtn: ElementRef<HTMLButtonElement>;
 
   public form: FormGroup;
   public user$: Observable<any>;
@@ -40,7 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private store: Store<AppState>,
     private afs: AngularFireAuth,
-    public authService:AuthService
+    public authService: AuthService
   ) {
   }
 
@@ -53,6 +60,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this._signIn();
+    this._loadSVGS();
   }
 
   private _createForm(): void {
@@ -72,6 +80,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     ).subscribe();
   }
 
+  private _loadSVGS(): void {
+    this.googleBtn.nativeElement.innerHTML = AUTH_SVGS.GOOGLE;
+    this.facebookBtn.nativeElement.innerHTML = AUTH_SVGS.FACEBOOK;
+    this.githubBtn.nativeElement.innerHTML = AUTH_SVGS.GITHUB;
+  }
+
   public register(): void {
     this.router.navigate(['register'])
   }
@@ -79,7 +93,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   public get control() {
     return this.form.controls;
   }
-
 
 
 }
