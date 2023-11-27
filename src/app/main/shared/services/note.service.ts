@@ -19,9 +19,9 @@ export class NoteService {
     private afd: AngularFireDatabase,
     private auth: AuthService
   ) {
-    this.auth.user().subscribe(user => {
-      this.uid = user?.uid;
-    })
+    // this.auth.user().subscribe(user => {
+    //   this.uid = user?.uid;
+    // })
 
   }
 

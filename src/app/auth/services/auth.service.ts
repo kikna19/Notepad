@@ -7,6 +7,7 @@ import {GoogleAuthProvider} from 'firebase/auth';
 import {getAuth, signInWithPopup} from "firebase/auth";
 import {signOut} from "@angular/fire/auth";
 import User = firebase.User;
+import {get} from "@angular/fire/database";
 
 
 @Injectable({
@@ -14,11 +15,13 @@ import User = firebase.User;
 })
 export class AuthService {
 
-  error: any;
+  private _error: any;
+  private _auth: any;
 
   constructor(
     private afs: AngularFireAuth
   ) {
+    this._auth = getAuth();
   }
 
   user() {
@@ -38,14 +41,13 @@ export class AuthService {
   }
 
   google(): Observable<any> {
-    const auth = getAuth();
-    signOut(auth).then(_ => console.log(_));
-    auth.languageCode = 'it'
-    return from(signInWithPopup(auth, new GoogleAuthProvider())
-      .then((result) => {
-        return result.user;
-      }).catch((error) => {
-        return error
-      }));
+    return from(
+      signInWithPopup(this._auth, new GoogleAuthProvider())
+        .then((result) => result.user)
+        .catch((error) => {
+          throw error; // Ensure to throw the error to be caught by the catchError in the effect.
+        })
+    );
   }
+
 }

@@ -11,6 +11,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -21,18 +22,19 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
   exports: [
     LoaderComponent
   ],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    RouterLink,
-    MatDividerModule,
-    MatButtonModule,
-    RouterOutlet,
-    LandingRoutingModule,
-    RouterModule,
-    MatToolbarModule,
-    ReactiveFormsModule,
-    MatSnackBarModule
-  ]
+    imports: [
+        CommonModule,
+        MatSidenavModule,
+        RouterLink,
+        MatDividerModule,
+        MatButtonModule,
+        RouterOutlet,
+        LandingRoutingModule,
+        RouterModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatMenuModule
+    ]
 })
 export class LandingModule { }

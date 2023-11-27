@@ -16,19 +16,10 @@ export class AuthEffects {
       ofType(AuthActions.loginRequest),
       switchMap((action: LoginRequest) =>
         this.authService.login(action.email, action.password).pipe(
-          map((loginResponse: UserCredential) => loginSuccess(loginResponse)),
-          catchError((err) => of(loginFailure({error: err || 'server_error'}))
-          )
-        )
-      )
-    )
-  )
-  loginGoogleRequest$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.loginRequest),
-      switchMap((action: LoginRequest) =>
-        this.authService.google().pipe(
-          map((loginResponse: UserCredential) => loginSuccess(loginResponse)),
+          map((loginResponse: UserCredential) => {
+            console.log(loginResponse);
+            return loginSuccess(loginResponse)
+          }),
           catchError((err) => of(loginFailure({error: err || 'server_error'}))
           )
         )
@@ -36,11 +27,35 @@ export class AuthEffects {
     )
   )
 
+  loginGoogleRequest$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginGoogleRequest),
+      switchMap((action: LoginRequest) =>
+        this.authService.google().pipe(
+          map((loginResponse: any) => {
+            console.log(loginResponse);
+            const userPayload = {
+              accessToken: loginResponse.accessToken,
+              email: loginResponse.email,
+              displayName: loginResponse.displayName,
+              phoneNumber: loginResponse.phoneNumber,
+              photoURL: loginResponse.photoURL,
+              lastLoginAt: loginResponse.lastLoginAt,
+            }
+            return loginSuccess(loginResponse.reloadUserInfo)
+          }),
+          catchError((err) => of(loginFailure({error: err || 'server_error'}))
+          )
+        )
+      )
+    )
+  )
 
   loginSuccess$ = createEffect(() =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap((res: LoginSuccess) => {
+        tap((res: any) => {
+
           this.router.navigate(['notes'])
         })
       ), {

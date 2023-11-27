@@ -16,7 +16,7 @@ import {FormValidator} from "../../validators/form-validator";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app/app.state";
-import {loginRequest} from "../../../store/auth/auth.actions";
+import {loginGoogleRequest, loginRequest} from "../../../store/auth/auth.actions";
 import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selectors";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   public googleAuth():void{
-    this.authService.google()
+    this.store.dispatch(loginGoogleRequest({idToken: ''}))
   }
 
   public get control() {

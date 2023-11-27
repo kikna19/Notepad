@@ -14,4 +14,4 @@ export const isAuthenticated: MemoizedSelector<AppState, boolean> =
     createSelector(authState, (state: AuthState) => state.isAuthenticated);
 
 export const user: MemoizedSelector<any, any> =
-  createSelector(authState, (state: any) => state)
+  createSelector(authState, (state: any) => state.user)

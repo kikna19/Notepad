@@ -7,18 +7,18 @@
         class="notes__item"
         [routerLink]="[{outlets: {primary: null, item: ['note', i]}}]">
         <div>{{item.note}}</div>
-<!--        <div>{{item.time | dateTimeFormat}}-->
-<!--          <span class="material-icons" id="lockNote">lock</span>-->
-<!--          <span id="lockText">Locked</span>-->
-<!--        </div>-->
+        <!--        <div>{{item.time | dateTimeFormat}}-->
+        <!--          <span class="material-icons" id="lockNote">lock</span>-->
+        <!--          <span id="lockText">Locked</span>-->
+        <!--        </div>-->
       </div>
-<!--      <div-->
-<!--        *ngIf="!item.locked"-->
-<!--        class="notes__item"-->
-<!--        [routerLink]="[{outlets: {primary: null, item: ['note', i]}}]">-->
-<!--        <div>{{item.note}}</div>-->
-<!--        <div>{{item.time | dateTimeFormat}}</div>-->
-<!--      </div>-->
+      <!--      <div-->
+      <!--        *ngIf="!item.locked"-->
+      <!--        class="notes__item"-->
+      <!--        [routerLink]="[{outlets: {primary: null, item: ['note', i]}}]">-->
+      <!--        <div>{{item.note}}</div>-->
+      <!--        <div>{{item.time | dateTimeFormat}}</div>-->
+      <!--      </div>-->
       <mat-divider></mat-divider>
     </div>
   </mat-drawer>
@@ -41,6 +41,19 @@
         <input
           #noteSearch
           type="text">
+        <button
+          [matMenuTriggerFor]="menu"
+          id="user"
+          mat-mini-fab>
+          <i class="material-icons">account_circle</i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <li mat-menu-item>
+            <ol>user: '12414912874hn</ol>
+            <ol>user: '12414912874hn</ol>
+            <ol>user: '12414912874hn</ol>
+          </li>
+        </mat-menu>
         <button
           id="logOut"
           (click)="logOut()"

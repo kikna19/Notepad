@@ -79,19 +79,16 @@
   }
 
 
-
   &__content {
     display: block;
     text-align: center;
     width: 100%;
-    height: calc(100% - 4rem);
+    height: calc(100% - 6rem);
 
     .content-controls {
-      position: relative;
       @include flexbox(center, space-between, row);
-      padding: 0 9.5rem 0 7rem;
-      width: calc(100% - 16.5rem);
-      height: 4rem;
+      padding: 0 7rem;
+      height: 6rem;
       background: #2B2B2B;
       border-bottom: .1rem solid black;
 
@@ -102,11 +99,9 @@
       }
 
       &__search {
-        #logOut {
-          position: absolute;
-          top: .8rem;
-          right: 7rem;
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         input {
           width: 12.2rem;
@@ -207,11 +202,12 @@
 
         div:nth-child(2) {
           margin-top: 1rem;
-          input{
+
+          input {
             width: 14rem;
           }
 
-          .box{
+          .box {
             top: 8rem;
             width: 16.8rem;
           }

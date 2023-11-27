@@ -1,10 +1,12 @@
 import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import firebase from "firebase/compat";
 import {debounceTime, fromEvent, Observable, pluck} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Router} from "@angular/router";
 import {filter, map, switchMap} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../store/app/app.state";
+import { user } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-landing',
@@ -29,19 +31,30 @@ export class LandingComponent implements AfterViewInit{
     private auth: AuthService,
     private afd: AngularFireDatabase,
     private router: Router,
+    private store: Store<AppState>
   ) {
-    // this.auth.user()
-    //   .subscribe((res: any) => {
-    //     this.user = {
-    //       uid: res?.uid,
-    //       email: res?.email,
-    //       authed: !res?.isAnonymous
-    //     }
-    //     this.notes$ = this.afd.list(`notes/${this.user.uid}`).valueChanges();
-    //     this.notes$.subscribe(res => {
-    //       this.noNotes = res.length;
-    //     })
-    //   });
+    this.store.select(user).subscribe(console.log);
+
+
+
+    this.auth.user()
+      .subscribe((res: any) => {
+        console.log(res);
+        this.user = {
+          displayName: res?.displayName,
+          phoneNumber: res?.phoneNumber,
+          photoURL: res?.photoURL,
+          lastLogin: res?.metadata?.lastLoginAt,
+          uid: res?.uid,
+          email: res?.email,
+          authed: !res?.isAnonymous
+        };
+
+        this.notes$ = this.afd.list(`notes/${this.user.uid}`).valueChanges();
+        this.notes$.subscribe(res => {
+          this.noNotes = res.length;
+        })
+      });
   }
 
 

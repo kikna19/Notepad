@@ -7,7 +7,10 @@ export const authReducer = createReducer(
 
   on(AuthActions.loginRequest, (state: AuthState) => ({...state, loading: true, error: null})),
 
+  on(AuthActions.loginGoogleRequest, (state: AuthState) => ({...state, loading: true, error: null})),
+
   on(AuthActions.loginSuccess, (state: AuthState, {user}) => {
+    console.log(user);
     return {
       ...state,
       isAuthenticated: true,
