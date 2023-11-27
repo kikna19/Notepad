@@ -4,8 +4,9 @@ import {from, Observable} from "rxjs";
 import firebase from "firebase/compat/app";
 import UserCredential = firebase.auth.UserCredential;
 import {GoogleAuthProvider} from 'firebase/auth';
-import { getAuth, signInWithPopup } from "firebase/auth";
+import {getAuth, signInWithPopup} from "firebase/auth";
 import {signOut} from "@angular/fire/auth";
+import User = firebase.User;
 
 
 @Injectable({
@@ -36,19 +37,15 @@ export class AuthService {
     this.afs.signOut();
   }
 
-  google() {
+  google(): Observable<any> {
     const auth = getAuth();
     signOut(auth).then(_ => console.log(_));
     auth.languageCode = 'it'
-    signInWithPopup(auth, new GoogleAuthProvider())
+    return from(signInWithPopup(auth, new GoogleAuthProvider())
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
+        return result.user;
       }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-    });
+        return error
+      }));
   }
 }
