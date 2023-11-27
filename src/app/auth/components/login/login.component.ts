@@ -90,6 +90,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.router.navigate(['register'])
   }
 
+  public googleAuth():void{
+    this.authService.google()
+  }
+
   public get control() {
     return this.form.controls;
   }
