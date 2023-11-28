@@ -49,7 +49,7 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <ng-container *ngIf="user$  as user">
+          <ng-container *ngIf="user$ | async as user">
             <li mat-menu-item>
               <ul>
                 <span>Name: {{' ' + user?.displayName}}</span>

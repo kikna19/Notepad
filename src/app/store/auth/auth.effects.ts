@@ -67,7 +67,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
         tap((res: any) => {
-          localStorage.setItem('state', JSON.stringify(res));
+          // localStorage.setItem('state', JSON.stringify(res));
           this.router.navigate(['notes'])
         })
       ), {

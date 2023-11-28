@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 import {filter, map, switchMap} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app/app.state";
-import { user } from 'src/app/store/auth/auth.selectors';
+import {user} from 'src/app/store/auth/auth.selectors';
 import {AuthState, User} from "../../../store/auth/auth.state";
 import {set} from "@angular/fire/database";
 
@@ -24,9 +24,9 @@ import {set} from "@angular/fire/database";
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit, AfterViewInit{
+export class LandingComponent implements OnInit, AfterViewInit {
 
-  user$: any
+  user$: Observable<any>
   notes$!: Observable<any[]>;
   searchedNote: any[] = [];
   notesArray: any[] = [];
@@ -68,15 +68,12 @@ export class LandingComponent implements OnInit, AfterViewInit{
 
 
   ngOnInit(): void {
+    this.user$ = this.store.select(user);
   }
 
   ngAfterViewInit(): void {
     this.checkedNote();
     this.searchNote();
-    this.store.subscribe((_) =>{
-      this.user$ = _?.auth?.user;
-      this.cdr.detectChanges();
-    })
   }
 
 
