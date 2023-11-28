@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, map, mergeMap, switchMap, tap} from "rxjs/operators";
+import {catchError, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
 import {AuthActions, loginFailure, loginSuccess} from "./auth.actions";
 import {LoginRequest, LoginSuccess} from "./auth.interface";
 import {AuthService} from "../../auth/services/auth.service";
@@ -16,10 +16,21 @@ export class AuthEffects {
       ofType(AuthActions.loginRequest),
       switchMap((action: LoginRequest) =>
         this.authService.login(action.email, action.password).pipe(
-          map((loginResponse: UserCredential) => {
-            console.log(loginResponse);
-            return loginSuccess(loginResponse)
-          }),
+          map((loginResponse: UserCredential | any) => {
+              const userInfo = loginResponse.user.multiFactor.user;
+              const userPayload = {
+                user: {
+                  accessToken: userInfo.accessToken,
+                  email: userInfo.email,
+                  displayName: userInfo.displayName,
+                  phoneNumber: userInfo.phoneNumber,
+                  photoURL: userInfo.photoURL,
+                  lastLoginAt: userInfo.lastLoginAt,
+                }
+              }
+              return loginSuccess(userPayload);
+            }
+          ),
           catchError((err) => of(loginFailure({error: err || 'server_error'}))
           )
         )
@@ -30,22 +41,23 @@ export class AuthEffects {
   loginGoogleRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginGoogleRequest),
-      switchMap((action: LoginRequest) =>
+      switchMap(() =>
         this.authService.google().pipe(
           map((loginResponse: any) => {
-            console.log(loginResponse);
             const userPayload = {
-              accessToken: loginResponse.accessToken,
-              email: loginResponse.email,
-              displayName: loginResponse.displayName,
-              phoneNumber: loginResponse.phoneNumber,
-              photoURL: loginResponse.photoURL,
-              lastLoginAt: loginResponse.lastLoginAt,
+              user: {
+                accessToken: loginResponse?.accessToken,
+                email: loginResponse?.email,
+                displayName: loginResponse?.displayName,
+                phoneNumber: loginResponse?.phoneNumber,
+                photoURL: loginResponse?.photoURL,
+                lastLoginAt: loginResponse?.lastLoginAt,
+              }
             }
-            return loginSuccess(loginResponse.reloadUserInfo)
+            return loginSuccess(userPayload)
           }),
-          catchError((err) => of(loginFailure({error: err || 'server_error'}))
-          )
+          catchError((err) => of(loginFailure({error: err || 'server_error'})),
+          ),
         )
       )
     )
@@ -55,7 +67,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
         tap((res: any) => {
-
+          localStorage.setItem('state', JSON.stringify(res));
           this.router.navigate(['notes'])
         })
       ), {

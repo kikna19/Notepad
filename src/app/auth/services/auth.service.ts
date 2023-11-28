@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {from, Observable} from "rxjs";
+import {from, Observable, of} from "rxjs";
 import firebase from "firebase/compat/app";
 import UserCredential = firebase.auth.UserCredential;
 import {GoogleAuthProvider} from 'firebase/auth';
@@ -45,7 +45,7 @@ export class AuthService {
       signInWithPopup(this._auth, new GoogleAuthProvider())
         .then((result) => result.user)
         .catch((error) => {
-          throw error; // Ensure to throw the error to be caught by the catchError in the effect.
+          throw error;
         })
     );
   }

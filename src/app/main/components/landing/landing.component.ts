@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {debounceTime, fromEvent, Observable, pluck} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
@@ -7,15 +16,17 @@ import {filter, map, switchMap} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app/app.state";
 import { user } from 'src/app/store/auth/auth.selectors';
+import {AuthState, User} from "../../../store/auth/auth.state";
+import {set} from "@angular/fire/database";
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements AfterViewInit{
+export class LandingComponent implements OnInit, AfterViewInit{
 
-  user!: any;
+  user$: any
   notes$!: Observable<any[]>;
   searchedNote: any[] = [];
   notesArray: any[] = [];
@@ -31,37 +42,41 @@ export class LandingComponent implements AfterViewInit{
     private auth: AuthService,
     private afd: AngularFireDatabase,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private cdr: ChangeDetectorRef
   ) {
-    this.store.select(user).subscribe(console.log);
 
 
-
-    this.auth.user()
-      .subscribe((res: any) => {
-        console.log(res);
-        this.user = {
-          displayName: res?.displayName,
-          phoneNumber: res?.phoneNumber,
-          photoURL: res?.photoURL,
-          lastLogin: res?.metadata?.lastLoginAt,
-          uid: res?.uid,
-          email: res?.email,
-          authed: !res?.isAnonymous
-        };
-
-        this.notes$ = this.afd.list(`notes/${this.user.uid}`).valueChanges();
-        this.notes$.subscribe(res => {
-          this.noNotes = res.length;
-        })
-      });
+    // this.auth.user()
+    //   .subscribe((res: any) => {
+    //     this.user = {
+    //       displayName: res?.displayName,
+    //       phoneNumber: res?.phoneNumber,
+    //       photoURL: res?.photoURL,
+    //       lastLogin: res?.metadata?.lastLoginAt,
+    //       uid: res?.uid,
+    //       email: res?.email,
+    //       authed: !res?.isAnonymous
+    //     };
+    //
+    //     this.notes$ = this.afd.list(`notes/${this.user.uid}`).valueChanges();
+    //     this.notes$.subscribe(res => {
+    //       this.noNotes = res.length;
+    //     })
+    //   });
   }
 
+
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit(): void {
     this.checkedNote();
     this.searchNote();
-
+    this.store.subscribe((_) =>{
+      this.user$ = _?.auth?.user;
+      this.cdr.detectChanges();
+    })
   }
 
 

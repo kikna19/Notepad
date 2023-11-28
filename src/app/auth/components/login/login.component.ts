@@ -76,7 +76,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     fromEvent(this.signInBtn.nativeElement, 'click').pipe(
       untilDestroyed(this),
       filter(() => this.form.valid),
-      map(() => this.store.dispatch(loginRequest({email, password}))),
+      map(() => {
+        return this.store.dispatch(loginRequest({email, password}))
+      }),
     ).subscribe();
   }
 

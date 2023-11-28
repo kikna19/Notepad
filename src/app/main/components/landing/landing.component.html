@@ -47,12 +47,20 @@
           mat-mini-fab>
           <i class="material-icons">account_circle</i>
         </button>
+
         <mat-menu #menu="matMenu">
-          <li mat-menu-item>
-            <ol>user: '12414912874hn</ol>
-            <ol>user: '12414912874hn</ol>
-            <ol>user: '12414912874hn</ol>
-          </li>
+          <ng-container *ngIf="user$  as user">
+            <li mat-menu-item>
+              <ul>
+                <span>Name: {{' ' + user?.displayName}}</span>
+                <ng-container *ngIf="user?.photoURL">
+                  <img [src]="user.photoURL" alt="user_img">
+                </ng-container>
+              </ul>
+              <ul>Email: {{' ' + user?.email}}</ul>
+              <ul>Name: {{' ' + user?.displayName}}</ul>
+            </li>
+          </ng-container>
         </mat-menu>
         <button
           id="logOut"

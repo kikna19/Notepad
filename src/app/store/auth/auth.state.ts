@@ -3,10 +3,14 @@ import {EntityState, createEntityAdapter, EntityAdapter} from '@ngrx/entity';
 export interface User {
   email: string;
   username: string;
+  displayName?: string;
+  phoneNumber?: string;
+  photoURL?: string;
+  lastLoginAt?: string;
 }
 
 export interface AuthState extends EntityState<User> {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean
   loading: boolean;
   error: string | null;
   user: any;

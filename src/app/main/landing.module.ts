@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {LandingComponent} from "./components/landing/landing.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLink, RouterModule, RouterOutlet} from "@angular/router";
@@ -22,19 +22,20 @@ import {MatMenuModule} from "@angular/material/menu";
   exports: [
     LoaderComponent
   ],
-    imports: [
-        CommonModule,
-        MatSidenavModule,
-        RouterLink,
-        MatDividerModule,
-        MatButtonModule,
-        RouterOutlet,
-        LandingRoutingModule,
-        RouterModule,
-        MatToolbarModule,
-        ReactiveFormsModule,
-        MatSnackBarModule,
-        MatMenuModule
-    ]
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    RouterLink,
+    MatDividerModule,
+    MatButtonModule,
+    RouterOutlet,
+    LandingRoutingModule,
+    RouterModule,
+    MatToolbarModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    NgOptimizedImage
+  ]
 })
 export class LandingModule { }
