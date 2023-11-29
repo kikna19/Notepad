@@ -58,7 +58,7 @@
                 </ng-container>
               </ul>
               <ul>Email: {{' ' + user?.email}}</ul>
-              <ul>Name: {{' ' + user?.displayName}}</ul>
+              <ul *ngIf="user?.lastLoginAt">Name: {{' ' + user?.lastLoginAt}}</ul>
             </li>
           </ng-container>
         </mat-menu>

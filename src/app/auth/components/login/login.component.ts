@@ -21,6 +21,7 @@ import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selec
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
 import {AUTH_SVGS} from "../../../main/shared/svgs/svgs";
+import {AuthState} from "../../../store/auth/auth.state";
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private store: Store<AppState>,
+    private store: Store<AuthState>,
     private afs: AngularFireAuth,
     public authService: AuthService
   ) {

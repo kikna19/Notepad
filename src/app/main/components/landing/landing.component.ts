@@ -26,7 +26,7 @@ import {set} from "@angular/fire/database";
 })
 export class LandingComponent implements OnInit, AfterViewInit {
 
-  user$: Observable<any>
+  user$: Observable<User>
   notes$!: Observable<any[]>;
   searchedNote: any[] = [];
   notesArray: any[] = [];
@@ -42,7 +42,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
     private auth: AuthService,
     private afd: AngularFireDatabase,
     private router: Router,
-    private store: Store<AppState>,
+    private store: Store<AuthState>,
     private cdr: ChangeDetectorRef
   ) {
 
