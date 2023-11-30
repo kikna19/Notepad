@@ -8,7 +8,7 @@ import {of} from "rxjs";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from "@angular/router";
-import {FactoryMethod} from "../../main/shared/methods/factory-method";
+import {FactoryMethod} from "../../shared/methods/factory-method";
 
 @Injectable()
 export class AuthEffects {

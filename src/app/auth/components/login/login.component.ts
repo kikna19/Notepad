@@ -15,13 +15,11 @@ import {AuthService} from "../../services/auth.service";
 import {FormValidator} from "../../validators/form-validator";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../../store/app/app.state";
 import {loginGoogleRequest, loginRequest} from "../../../store/auth/auth.actions";
 import {authLoading, isAuthenticated, user} from "../../../store/auth/auth.selectors";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import firebase from "firebase/compat";
-import {AUTH_SVGS} from "../../../main/shared/svgs/svgs";
 import {AuthState} from "../../../store/auth/auth.state";
+import {AUTH_SVGS} from "../../../shared/svgs/svgs";
 
 @UntilDestroy()
 @Component({

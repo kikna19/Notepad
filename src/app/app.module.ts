@@ -3,10 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {SingleItemComponent} from './main/shared/components/single-item/single-item.component';
-import {ConfirmComponent} from './main/shared/components/confirm/confirm.component';
-import {DatePipe} from './main/shared/pipes/date.pipe';
-import {LockedItemComponent} from './main/shared/components/locked-item/locked-item.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from "./auth/auth.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -21,7 +17,9 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import * as firebase from 'firebase/app';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {appReducers, metaReducers} from "./store/app/app.reducers";
-import {authState} from "./store/auth/auth.selectors";
+import {SingleItemComponent} from "./shared/components/single-item/single-item.component";
+import {ConfirmComponent} from "./shared/components/confirm/confirm.component";
+import {LockedItemComponent} from "./shared/components/locked-item/locked-item.component";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHf9NYrFlnm-Qp3M_WAicue_aXhh3gUWs",
@@ -40,7 +38,6 @@ firebase.initializeApp(firebaseConfig)
     AppComponent,
     SingleItemComponent,
     ConfirmComponent,
-    DatePipe,
     LockedItemComponent
   ],
   imports: [

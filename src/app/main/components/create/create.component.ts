@@ -2,10 +2,10 @@ import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject, fromEvent} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
-import {NoteService} from "../../shared/services/note.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {exhaustMap, filter, tap} from "rxjs/operators";
-import {ConfirmComponent} from "../../shared/components/confirm/confirm.component";
+import {NoteService} from "../../../shared/services/note.service";
+import {ConfirmComponent} from "../../../shared/components/confirm/confirm.component";
 
 @Component({
   selector: 'app-create',

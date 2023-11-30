@@ -1,4 +1,4 @@
-import {UserFactory, UserInfo} from "../../../store/auth/auth.interface";
+import {UserFactory, UserInfo} from "../../store/auth/auth.interface";
 
 export class FactoryMethod implements UserFactory {
   public createModObj(sourceObj: any): UserInfo {
