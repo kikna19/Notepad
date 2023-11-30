@@ -1,13 +1,14 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
+import {catchError, map, switchMap, tap} from "rxjs/operators";
 import {AuthActions, loginFailure, loginSuccess} from "./auth.actions";
-import {LoginRequest, LoginSuccess} from "./auth.interface";
+import {LoginRequest, UserInfo} from "./auth.interface";
 import {AuthService} from "../../auth/services/auth.service";
 import {of} from "rxjs";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from "@angular/router";
+import {FactoryMethod} from "../../main/shared/methods/factory-method";
 
 @Injectable()
 export class AuthEffects {
@@ -18,16 +19,7 @@ export class AuthEffects {
         this.authService.login(action.email, action.password).pipe(
           map((loginResponse: UserCredential | any) => {
               const userInfo = loginResponse.user.multiFactor.user;
-              const userPayload = {
-                user: {
-                  accessToken: userInfo.accessToken,
-                  email: userInfo.email,
-                  displayName: userInfo.displayName,
-                  phoneNumber: userInfo.phoneNumber,
-                  photoURL: userInfo.photoURL,
-                  lastLoginAt: userInfo.lastLoginAt,
-                }
-              }
+              const userPayload: UserInfo = this._userFactory.createModObj(userInfo);
               return loginSuccess(userPayload);
             }
           ),
@@ -44,16 +36,7 @@ export class AuthEffects {
       switchMap(() =>
         this.authService.google().pipe(
           map((loginResponse: any) => {
-            const userPayload = {
-              user: {
-                accessToken: loginResponse?.accessToken,
-                email: loginResponse?.email,
-                displayName: loginResponse?.displayName,
-                phoneNumber: loginResponse?.phoneNumber,
-                photoURL: loginResponse?.photoURL,
-                lastLoginAt: loginResponse?.lastLoginAt,
-              }
-            }
+            const userPayload: UserInfo = this._userFactory.createModObj(loginResponse);
             return loginSuccess(userPayload)
           }),
           catchError((err) => of(loginFailure({error: err || 'server_error'})),
@@ -66,8 +49,7 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap((res: any) => {
-          // localStorage.setItem('state', JSON.stringify(res));
+        tap((): void => {
           this.router.navigate(['notes'])
         })
       ), {
@@ -82,4 +64,6 @@ export class AuthEffects {
     private router: Router
   ) {
   }
+
+  private _userFactory: FactoryMethod = new FactoryMethod();
 }
