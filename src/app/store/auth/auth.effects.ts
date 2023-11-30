@@ -9,14 +9,16 @@ import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from "@angular/router";
 import {FactoryMethod} from "../../shared/methods/factory-method";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ErrorHandlerComponent} from "../../shared/components/error-handler/error-handler.component";
 
 @Injectable()
 export class AuthEffects {
   loginRequest$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(AuthActions.loginRequest),
       switchMap((action: LoginRequest) =>
-        this.authService.login(action.email, action.password).pipe(
+        this._authService.login(action.email, action.password).pipe(
           map((loginResponse: UserCredential | any) => {
               const userInfo = loginResponse.user.multiFactor.user;
               const userPayload: UserInfo = this._userFactory.createModObj(userInfo);
@@ -31,15 +33,15 @@ export class AuthEffects {
   )
 
   loginGoogleRequest$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(AuthActions.loginGoogleRequest),
       switchMap(() =>
-        this.authService.google().pipe(
+        this._authService.google().pipe(
           map((loginResponse: any) => {
             const userPayload: UserInfo = this._userFactory.createModObj(loginResponse);
             return loginSuccess(userPayload)
           }),
-          catchError((err) => of(loginFailure({error: err || 'server_error'})),
+          catchError((err) => of(loginFailure({error: (err?.error?.code || err?.error) || 'server_error'})),
           ),
         )
       )
@@ -47,10 +49,24 @@ export class AuthEffects {
   )
 
   loginSuccess$ = createEffect(() =>
-      this.actions$.pipe(
+      this._actions$.pipe(
         ofType(AuthActions.loginSuccess),
         tap((): void => {
-          this.router.navigate(['notes'])
+          this._router.navigate(['notes'])
+        })
+      ), {
+      dispatch: false
+    }
+  )
+  loginFailure$ = createEffect(() =>
+      this._actions$.pipe(
+        ofType(AuthActions.loginFailure),
+        tap((err): void => {
+          this._snackBar.openFromComponent(ErrorHandlerComponent, {
+            data: {
+              err: JSON.parse(JSON.stringify(err.error.code))
+            }
+          })
         })
       ), {
       dispatch: false
@@ -59,9 +75,10 @@ export class AuthEffects {
 
 
   constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private router: Router
+    private _actions$: Actions,
+    private _authService: AuthService,
+    private _router: Router,
+    private _snackBar: MatSnackBar
   ) {
   }
 

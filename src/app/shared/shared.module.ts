@@ -6,6 +6,7 @@ import {ErrorHandlerComponent} from "./components/error-handler/error-handler.co
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatButtonModule} from "@angular/material/button";
+import {JsonPipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {MatButtonModule} from "@angular/material/button";
   imports: [
     MatFormFieldModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    JsonPipe
   ]
 })
 export class SharedModule {
