@@ -17,9 +17,6 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import * as firebase from 'firebase/app';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {appReducers, metaReducers} from "./store/app/app.reducers";
-import {SingleItemComponent} from "./shared/components/single-item/single-item.component";
-import {ConfirmComponent} from "./shared/components/confirm/confirm.component";
-import {LockedItemComponent} from "./shared/components/locked-item/locked-item.component";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHf9NYrFlnm-Qp3M_WAicue_aXhh3gUWs",
@@ -36,9 +33,6 @@ firebase.initializeApp(firebaseConfig)
 @NgModule({
   declarations: [
     AppComponent,
-    SingleItemComponent,
-    ConfirmComponent,
-    LockedItemComponent
   ],
   imports: [
     BrowserModule,
