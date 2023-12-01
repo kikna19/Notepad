@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   private _createForm(): void {
     this.form = this.fb.group({
       email: ['a@a.com', [Validators.required, Validators.email]],
-      password: ['Qwerty1232', [Validators.required, FormValidator.minLength, FormValidator.maxLength]],
+      password: ['Qwerty123', [Validators.required, FormValidator.minLength, FormValidator.maxLength]],
     });
   }
 
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   public googleAuth():void{
-    this.store.dispatch(loginGoogleRequest({idToken: ''}))
+    this.store.dispatch(loginGoogleRequest())
   }
 
   public get control() {

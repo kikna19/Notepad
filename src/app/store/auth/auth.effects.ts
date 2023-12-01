@@ -9,8 +9,7 @@ import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
 import {Router} from "@angular/router";
 import {FactoryMethod} from "../../shared/methods/factory-method";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ErrorHandlerComponent} from "../../shared/components/error-handler/error-handler.component";
+import {AlertService} from "../../shared/services/alert.service";
 
 @Injectable()
 export class AuthEffects {
@@ -48,25 +47,30 @@ export class AuthEffects {
     )
   )
 
+  a = ':airplane'
+
+
   loginSuccess$ = createEffect(() =>
       this._actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap((): void => {
-          this._router.navigate(['notes'])
+        tap((user: UserInfo): void => {
+          this._router.navigate(['notes']);
+          const username = user?.user?.displayName;
+          this._alertService.success(`Hello ${username} ✋`);
         })
       ), {
       dispatch: false
     }
   )
+
   loginFailure$ = createEffect(() =>
       this._actions$.pipe(
         ofType(AuthActions.loginFailure),
         tap((err): void => {
-          this._snackBar.openFromComponent(ErrorHandlerComponent, {
-            data: {
-              err: JSON.parse(JSON.stringify(err.error.code))
-            }
-          })
+          let errorText: string = JSON.parse(JSON.stringify(err.error.code));
+          const sliceIndex = errorText?.indexOf('/')
+          errorText = sliceIndex ? errorText.substring(sliceIndex + 1) : errorText;
+          this._alertService.error(errorText)
         })
       ), {
       dispatch: false
@@ -78,7 +82,7 @@ export class AuthEffects {
     private _actions$: Actions,
     private _authService: AuthService,
     private _router: Router,
-    private _snackBar: MatSnackBar
+    private _alertService: AlertService
   ) {
   }
 

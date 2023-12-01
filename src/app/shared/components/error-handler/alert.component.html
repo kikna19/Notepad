@@ -1,0 +1,13 @@
+<aside class="block text-center relative">
+  <span [class]="alert.type == AlertEnum.SUCCESS ? 'bg-[green]' : 'bg-[red]'"
+        class="h-full w-1 block absolute right-0 rounded"></span>
+  <span [class]="alert.type == AlertEnum.SUCCESS ? 'text-[green]' : 'text-[red]'"
+    class="example-pizza-party font-error tracking-widest" matSnackBarLabel>
+ {{alert.text}}
+</span>
+  <span>
+</span>
+  <span matSnackBarActions>
+  <button mat-button matSnackBarAction></button>
+</span>
+</aside>
